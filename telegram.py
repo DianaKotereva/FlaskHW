@@ -289,11 +289,12 @@ def get_train_data(message):
         
         train = pd.DataFrame(json.loads(train))
         
+        bot.send_message(message.chat.id, 'Хорошо. Пожалуйста, пришлите y_train array в формате json')
+        bot.register_next_step_handler(message, get_y_train_data)         
+        
     except Exception as e:
-        bot.reply_to(message, e)
-    
-    bot.send_message(message.chat.id, 'Хорошо. Пожалуйста, пришлите y_train array в формате json')
-    bot.register_next_step_handler(message, get_y_train_data)            
+        bot.send_message(message.chat.id, 'Не понимаю, что вы прислали. Пожалуйста, пришлите train данные в формате json')
+        bot.register_next_step_handler(message, get_train_data)          
     
 def get_y_train_data(message):
     global step
@@ -321,7 +322,8 @@ def get_y_train_data(message):
             yes_no_choice(message)
 
     except Exception as e:
-        bot.reply_to(message, e)
+        bot.send_message(message.chat.id, 'Не понимаю, что вы прислали. Пожалуйста, пришлите y_train array в формате json')
+        bot.register_next_step_handler(message, get_y_train_data)      
         
 def get_test_data(message):
     
@@ -337,12 +339,13 @@ def get_test_data(message):
             test = message.text
         
         test = pd.DataFrame(json.loads(test))
-    except Exception as e:
-        bot.reply_to(message, e)
+        step = 'Получить тестовые данные'
+        yes_no_choice(message)
     
-    step = 'Получить тестовые данные'
-    yes_no_choice(message)
-                
+    except Exception as e:
+        bot.send_message(message.chat.id, 'Не понимаю, что вы прислали. Пожалуйста, пришлите test данные в формате json')
+        bot.register_next_step_handler(message, get_test_data)  
+    
     
 def get_y_test_data(message):
     global step
@@ -369,9 +372,9 @@ def get_y_test_data(message):
             bot.send_message(message.chat.id, 'Начинаю прогноз')
             predict(message)
     except Exception as e:
-        bot.reply_to(message, e)
+        bot.send_message(message.chat.id, 'Не понимаю, что вы прислали. Пожалуйста, пришлите y_test array в формате json')
+        bot.register_next_step_handler(message, get_y_test_data)   
         
-    
     
 def predict(message):
     
