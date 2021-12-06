@@ -15,7 +15,7 @@ from sklearn.model_selection import StratifiedKFold, cross_val_score
 import json
 import pandas as pd
 
-bot = telebot.TeleBot('2077078112:AAF2keca4msLO-0IFeaRIlMhoz7yfUmC090')
+bot = telebot.TeleBot('XXXXXXXXXXXXXXXXXXXXXXXXXXX')
 
 model_classes = {'logreg': 'Логистическая регрессия', 'forest': 'RandomForestClassifier', 'boosting': 'LGBMClassifier'}
 model_classes_inverse = {v:k for k, v in model_classes.items()}
